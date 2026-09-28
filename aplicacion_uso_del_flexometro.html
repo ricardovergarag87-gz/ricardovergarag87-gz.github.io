@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aprende a usar el flexómetro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --paper:#F3F6FA;--grid:#DDE7F0;--ink:#12213A;--ink2:#465872;--card:#FFFFFF;--line:#C3D0DF;
+  --mm:#1D4ED8;--on-mm:#FFFFFF;--in:#C2410C;--on-in:#FFFFFF;
+  --ok:#127A4F;--bad:#B42335;--warn:#8A5A00;--mark:#E5484D;--focus:#1D4ED8;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0D1626;--grid:#16243B;--ink:#E8EEF8;--ink2:#A3B3CB;--card:#14213A;--line:#2C3F5E;
+    --mm:#8FB2FF;--on-mm:#0D1626;--in:#FF9F6B;--on-in:#0D1626;
+    --ok:#52C98F;--bad:#FF8090;--warn:#F2B84B;--mark:#FF6B70;--focus:#8FB2FF;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0D1626;--grid:#16243B;--ink:#E8EEF8;--ink2:#A3B3CB;--card:#14213A;--line:#2C3F5E;
+  --mm:#8FB2FF;--on-mm:#0D1626;--in:#FF9F6B;--on-in:#0D1626;
+  --ok:#52C98F;--bad:#FF8090;--warn:#F2B84B;--mark:#FF6B70;--focus:#8FB2FF;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink);
+  font:400 17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+
+/* Encabezado */
+.head{padding-top:20px}
+.headrow{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.school{margin:0 0 6px;color:var(--ink2);font-size:.95rem}
+h1{font:700 clamp(2.2rem,8.5vw,3.6rem)/1 "Barlow Condensed","Arial Narrow",sans-serif;margin:0;letter-spacing:-.005em}
+.head .sub{margin:10px 0 0;max-width:34em}
+.pts{border:2px solid var(--ink);border-radius:8px;padding:6px 14px 4px;background:var(--card);text-align:center;min-width:92px}
+.pts b{display:block;font:700 2rem/1 "Barlow Condensed","Arial Narrow",sans-serif}
+.pts span{font-size:.85rem;color:var(--ink2)}
+.ruler{
+  height:30px;margin-top:20px;border-block:2px solid #111;background-color:#FFC61A;
+  background-image:
+    repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 40px),
+    repeating-linear-gradient(90deg,#111 0 1.5px,transparent 1.5px 20px),
+    repeating-linear-gradient(90deg,#111 0 1px,transparent 1px 4px);
+  background-size:100% 20px,100% 14px,100% 8px;background-repeat:no-repeat;
+}
+
+/* Pestañas */
+.tabsbar{border-bottom:2px solid var(--ink);margin-top:0}
+.tabs{display:flex;gap:4px;overflow-x:auto;max-width:980px;margin:0 auto;padding:14px 16px 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:10px 16px;min-height:44px;border:2px solid var(--ink);border-bottom:0;border-radius:8px 8px 0 0;background:var(--card);font-weight:700;margin-bottom:-2px}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.panel{max-width:980px;margin:0 auto;padding:0 16px 40px}
+
+/* Hojas */
+.sheet{background:var(--card);border:2px solid var(--ink);border-left:5px solid var(--mark);border-radius:4px;padding:18px 18px 22px;margin-top:22px}
+h2{font:600 clamp(1.6rem,5.5vw,2.1rem)/1.1 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 6px}
+h3{font:600 1.4rem/1.15 "Barlow Condensed","Arial Narrow",sans-serif;margin:18px 0 6px}
+p{margin:6px 0}
+.lead{color:var(--ink2);margin-bottom:14px;max-width:44em}
+.two{display:grid;gap:8px 28px}
+@media(min-width:820px){.two{grid-template-columns:1fr 1fr}}
+ul.tips{margin:8px 0 0;padding-left:1.2em}
+ul.tips li{margin:5px 0;max-width:38em}
+ul.check{list-style:none;margin:8px 0 0;padding:0}
+ul.check li{margin:8px 0;padding-left:30px;position:relative;max-width:40em}
+ul.check li::before{content:"";position:absolute;left:0;top:.3em;width:18px;height:18px;border:2px solid var(--ink);border-radius:4px}
+ul.check li::after{content:"";position:absolute;left:6px;top:.42em;width:5px;height:10px;border:solid var(--ok);border-width:0 3px 3px 0;transform:rotate(40deg)}
+.mmc{color:var(--mm);font-weight:700}.inc{color:var(--in);font-weight:700}
+
+/* Controles */
+.btn{background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:6px;padding:10px 18px;font-weight:700;min-height:44px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{background:transparent;border:0;padding:9px 14px;min-height:44px;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button[data-sys="mm"][aria-pressed="true"]{background:var(--mm);color:var(--on-mm)}
+.seg button[data-sys="in"][aria-pressed="true"]{background:var(--in);color:var(--on-in)}
+.ctrl{display:flex;gap:14px 20px;flex-wrap:wrap;align-items:flex-end;margin-top:14px}
+.ctrl label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.95rem;flex:1 1 220px}
+input[type=range]{width:100%;accent-color:var(--ink);min-height:32px}
+input[type=number],input[type=text],select{
+  font:inherit;font-size:1.1rem;color:var(--ink);background:var(--paper);
+  border:2px solid var(--ink);border-radius:6px;padding:8px 10px;min-height:44px;width:5.5em;
+}
+input.wide{width:9em}
+[data-unit="mm"]{--sys:var(--mm)}
+[data-unit="in"]{--sys:var(--in)}
+.lvls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.lvl{border:2px solid var(--line);background:var(--paper);border-radius:6px;padding:8px 10px;text-align:left;display:flex;flex-direction:column;gap:6px;min-height:44px}
+.lvl[aria-pressed="true"]{border-color:var(--sys,var(--ink));box-shadow:inset 0 0 0 1px var(--sys,var(--ink))}
+.lvl .ln{font-weight:700;line-height:1.2}
+.lvl .done{font-size:.85rem;color:var(--ok);font-weight:700}
+.tks{display:inline-flex;gap:4px;align-items:flex-end;height:18px}
+.tks i{display:block;width:4px;height:9px;background:var(--line);border-radius:1px}
+.tks i:nth-child(3){height:18px}
+.tks i:nth-child(2),.tks i:nth-child(4){height:13px}
+.tks i.on{background:#FFC61A;box-shadow:0 0 0 1px #111}
+.tks.full i.on{background:var(--ok);box-shadow:none}
+
+/* Cinta */
+.tapebox{width:100%;overflow:hidden;border-radius:4px;line-height:0;user-select:none;-webkit-user-select:none;margin-top:12px}
+.tapebox svg{display:block;max-width:none}
+.tapebox.drag{cursor:ew-resize;touch-action:pan-y}
+.tapebox.drag:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+svg .tn{font:700 18px "Barlow Condensed","Arial Narrow",sans-serif;fill:#111}
+svg .tu{font:600 13px "Barlow Condensed","Arial Narrow",sans-serif;fill:#111;opacity:.75}
+svg .fl{font:600 11px "Barlow Condensed","Arial Narrow",sans-serif;fill:#111}
+
+/* Lecturas */
+.reads{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);border-radius:8px;overflow:hidden}
+.read{padding:10px 14px 12px;min-width:0}
+.read+.read{border-left:2px solid var(--ink)}
+.read .lab{font-weight:700;font-size:.95rem}
+.read.mm .lab{color:var(--mm)}.read.in .lab{color:var(--in)}
+.big{font:700 clamp(1.7rem,7vw,2.6rem)/1.15 "Barlow Condensed","Arial Narrow",sans-serif;min-height:1.15em}
+.read .s{font-size:.9rem;color:var(--ink2);line-height:1.3}
+.mix{display:inline-flex;align-items:center;gap:.12em;white-space:nowrap}
+.fr{display:inline-flex;flex-direction:column;align-items:center;font-size:.62em;line-height:1;margin:0 .06em}
+.fr .n{border-bottom:.09em solid currentColor;padding:0 .2em .07em}
+.fr .d{padding-top:.07em}
+.mix .u{font-size:.65em;align-self:flex-start;margin-left:.08em}
+
+/* Práctica */
+.task{font-size:1.1rem;font-weight:700;margin:14px 0 0}
+.tgt{font:700 1.5rem/1 "Barlow Condensed","Arial Narrow",sans-serif}
+.ans{display:flex;gap:10px 12px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.ans .un{font-weight:700}
+.cap{font-size:.92rem;color:var(--ink2);margin-top:14px}
+.fbox{display:inline-flex;flex-direction:column;align-items:center;gap:5px}
+.fbox .bar{width:100%;height:3px;background:var(--ink);border-radius:2px}
+.fbox input,.fbox select{width:5.2em;text-align:center}
+.fb{margin-top:14px;padding:0;border-radius:4px;line-height:1.45}
+.fb:empty{display:none}
+.fb.ok,.fb.bad,.fb.warn,.fb.info{padding:10px 14px;border-left:5px solid}
+.fb.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent)}
+.fb.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.fb.warn{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.fb.info{border-color:var(--sys,var(--ink));background:color-mix(in srgb,var(--sys,var(--ink)) 10%,transparent)}
+.fb b .mix,.fb .mix{font-size:1.25em}
+
+/* Convertidor */
+.calc{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-top:8px}
+.calc label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.95rem}
+.calc .eq{font:700 2rem/1 "Barlow Condensed",sans-serif;padding-bottom:8px}
+.cres{margin-top:12px;display:flex;gap:10px 28px;flex-wrap:wrap;align-items:center}
+.cres .big{font-size:2rem}
+table.conv{width:100%;border-collapse:collapse;margin-top:8px;max-width:520px}
+table.conv th,table.conv td{text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line);font-weight:400}
+table.conv th{font-weight:700;color:var(--ink2);font-size:.9rem}
+table.conv button{background:transparent;border:0;padding:8px 0;text-align:left;font-size:1.3rem;min-height:44px;font-family:"Barlow Condensed",sans-serif;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+
+/* Partes */
+svg.parts{width:100%;max-width:460px;height:auto;display:block;margin-top:8px}
+svg.parts .part{cursor:pointer}
+svg.parts:has(.active) .part:not(.active){opacity:.5}
+svg.parts .part.active rect,svg.parts .part.active path{stroke:var(--mm);stroke-width:5}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chips button{border:2px solid var(--ink);background:var(--paper);border-radius:6px;padding:8px 12px;min-height:44px;font-weight:700}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.partdesc{margin-top:10px;max-width:40em;min-height:4.5em}
+
+svg .bt{font:600 15px "Barlow Condensed","Arial Narrow",sans-serif;fill:var(--ink)}
+.ficha{border:2px dashed var(--line);border-radius:6px;padding:10px 14px;margin-top:14px}
+.ficha .task{margin:0;font-weight:400;font-size:1.1rem}
+.ficha .task b{font-weight:700}
+.foot{max-width:980px;margin:0 auto;padding:8px 16px 32px;color:var(--ink2);font-size:.95rem;display:flex;gap:12px 24px;flex-wrap:wrap;align-items:center}
+.foot a{color:var(--mm);font-weight:700}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="wrap">
+    <div class="headrow">
+      <div>
+        <p class="school">Liceo Técnico Profesional Mauricio Hochschild, CEAT</p>
+        <h1>Aprende a usar el flexómetro</h1>
+        <p class="sub">Mide en milímetros y en pulgadas. En el taller también se le dice huincha.</p>
+      </div>
+      <div class="pts" aria-label="Tus puntos"><b id="pts">0</b><span>puntos</span></div>
+    </div>
+  </div>
+  <div class="ruler" aria-hidden="true"></div>
+</header>
+
+<div class="tabsbar">
+  <nav class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab" role="tab" id="t-conoce" data-p="p-conoce" aria-controls="p-conoce" aria-selected="true">Conoce la cinta</button>
+    <button class="tab" role="tab" id="t-lee" data-p="p-lee" aria-controls="p-lee" aria-selected="false" tabindex="-1">Lee la medida</button>
+    <button class="tab" role="tab" id="t-marca" data-p="p-marca" aria-controls="p-marca" aria-selected="false" tabindex="-1">Marca la medida</button>
+    <button class="tab" role="tab" id="t-taller" data-p="p-taller" aria-controls="p-taller" aria-selected="false" tabindex="-1">Piezas de taller</button>
+    <button class="tab" role="tab" id="t-convierte" data-p="p-convierte" aria-controls="p-convierte" aria-selected="false" tabindex="-1">Convierte</button>
+  </nav>
+</div>
+
+<!-- CONOCE -->
+<section class="panel" id="p-conoce" role="tabpanel" aria-labelledby="t-conoce">
+  <div class="sheet">
+    <h2>Explora la cinta</h2>
+    <p class="lead">Toca o arrastra sobre la cinta para mover la marca roja. Arriba ves la lectura en las dos unidades.</p>
+    <div class="reads" aria-live="polite">
+      <div class="read mm"><div class="lab">Milímetros</div><div class="big" id="rdMm"></div><div class="s" id="rdMmS"></div></div>
+      <div class="read in"><div class="lab">Pulgadas</div><div class="big" id="rdIn"></div><div class="s" id="rdInS"></div></div>
+    </div>
+    <div class="tapebox drag" id="exTape" tabindex="0" aria-label="Cinta de medir. Usa las flechas izquierda y derecha para mover la marca."></div>
+    <div class="ctrl">
+      <label>Desliza la cinta<input type="range" id="exFrom" min="0" max="300" step="1" value="0"></label>
+    </div>
+    <div class="ctrl">
+      <div class="seg" role="group" aria-label="Zoom" id="exZoom">
+        <button type="button" data-zoom="40" aria-pressed="false">Cerca</button>
+        <button type="button" data-zoom="80" aria-pressed="true">Medio</button>
+        <button type="button" data-zoom="130" aria-pressed="false">Lejos</button>
+      </div>
+      <div class="seg" role="group" aria-label="La marca salta de raya en raya de" id="exSnap">
+        <button type="button" data-sys="mm" aria-pressed="true">Salta por milímetros</button>
+        <button type="button" data-sys="in" aria-pressed="false">Salta por pulgadas</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <h2>Cómo se lee cada escala</h2>
+    <div class="two">
+      <div>
+        <h3 class="mmc">Milímetros</h3>
+        <div class="tapebox" id="figCm"></div>
+        <ul class="tips">
+          <li>Cada número grande es un centímetro (cm).</li>
+          <li>Entre dos números hay 10 espacios. Cada espacio vale 1 mm.</li>
+          <li>La raya mediana, a la mitad, marca 5 mm.</li>
+          <li>1 cm = 10 mm. Entonces 7 cm 4 mm = 74 mm.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="inc">Pulgadas</h3>
+        <div class="tapebox" id="figIn"></div>
+        <div class="actions" style="margin-top:8px"><button class="btn ghost" id="fig16" type="button">Ver todo en dieciseisavos</button></div>
+        <ul class="tips">
+          <li>Cada número grande es una pulgada (símbolo ″). Se divide en 16 partes iguales.</li>
+          <li>Mientras más larga es la raya, más grande es la fracción: 1/2, luego 1/4 y 3/4, luego los octavos, y las más cortas son 1/16.</li>
+          <li>Simplifica siempre: 6/16 = 3/8.</li>
+          <li>1″ = 25,4 mm.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <h2>Partes del flexómetro</h2>
+    <p class="lead">Toca una parte para saber qué hace.</p>
+    <svg class="parts" id="partsSvg" viewBox="0 0 380 165" role="img" aria-label="Dibujo de un flexómetro con sus partes"></svg>
+    <div class="chips" id="partChips"></div>
+    <p class="partdesc" id="partDesc" aria-live="polite"></p>
+  </div>
+
+  <div class="sheet">
+    <h2>Antes de medir</h2>
+    <ul class="check">
+      <li>Apoya el gancho firme contra el borde de la pieza.</li>
+      <li>Estira la cinta recta y tensa, sin dobleces.</li>
+      <li>Mira la marca de frente, no de costado. Si miras inclinado, lees mal.</li>
+      <li>Si la marca cae entre dos rayas, elige la más cercana.</li>
+      <li>Anota siempre la unidad: mm o pulgadas.</li>
+      <li>En medidas interiores, suma el ancho de la carcasa (viene impreso en ella).</li>
+      <li>Suelta el freno con cuidado. Si la cinta vuelve de golpe, puede cortarte.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- LEE -->
+<section class="panel" id="p-lee" role="tabpanel" aria-labelledby="t-lee" hidden>
+  <div class="sheet" id="leeBox" data-check="#leeCheck">
+    <h2>Lee la medida</h2>
+    <p class="lead">Elige la unidad y el nivel. Cada nivel se supera con 5 aciertos.</p>
+    <div id="leePick"></div>
+    <p class="task">La pieza llega hasta la marca roja. ¿Cuánto mide?</p>
+    <div class="tapebox" id="leeTape"></div>
+    <div id="leeAns"></div>
+    <div class="fb" id="leeFb" role="status" aria-live="polite"></div>
+    <div class="actions">
+      <button class="btn" id="leeCheck" type="button">Comprobar</button>
+      <button class="btn ghost" id="leeHint" type="button">Ver pista</button>
+      <button class="btn" id="leeNext" type="button" hidden>Siguiente medida</button>
+    </div>
+  </div>
+</section>
+
+<!-- MARCA -->
+<section class="panel" id="p-marca" role="tabpanel" aria-labelledby="t-marca" hidden>
+  <div class="sheet" id="maBox" data-check="#maCheck">
+    <h2>Marca la medida</h2>
+    <p class="lead">Ahora al revés: te doy la medida y tú llevas la marca hasta ella. Arrastra la marca o ajústala raya por raya.</p>
+    <div id="maPick"></div>
+    <p class="task" id="maTask"></p>
+    <div class="tapebox drag" id="maTape" tabindex="0" aria-label="Cinta de medir. Usa las flechas izquierda y derecha para mover la marca."></div>
+    <div class="actions">
+      <button class="btn ghost" id="maLeft" type="button" aria-label="Mover la marca una raya a la izquierda">◀ 1 raya</button>
+      <button class="btn ghost" id="maRight" type="button" aria-label="Mover la marca una raya a la derecha">1 raya ▶</button>
+    </div>
+    <div class="fb" id="maFb" role="status" aria-live="polite"></div>
+    <div class="actions">
+      <button class="btn" id="maCheck" type="button">Comprobar</button>
+      <button class="btn" id="maNext" type="button" hidden>Siguiente medida</button>
+    </div>
+  </div>
+</section>
+
+<!-- TALLER -->
+<section class="panel" id="p-taller" role="tabpanel" aria-labelledby="t-taller" hidden>
+  <div class="sheet" id="pzBox" data-check="#pzCheck">
+    <h2>Problemas con piezas reales</h2>
+    <p class="lead">Situaciones que se viven en el taller: medir piezas, cortar material, medir por dentro y usar herramientas en pulgadas. Cada tipo se supera con 5 aciertos.</p>
+    <div id="pzPick"></div>
+    <div class="ficha"><p class="task" id="pzTask"></p></div>
+    <div class="tapebox" id="pzTape"></div>
+    <div class="tapebox" id="pzFig"></div>
+    <div id="pzAns"></div>
+    <div class="fb" id="pzFb" role="status" aria-live="polite"></div>
+    <div class="actions">
+      <button class="btn" id="pzCheck" type="button">Comprobar</button>
+      <button class="btn" id="pzNext" type="button" hidden>Siguiente problema</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONVIERTE -->
+<section class="panel" id="p-convierte" role="tabpanel" aria-labelledby="t-convierte" hidden>
+  <div class="sheet">
+    <h2>De pulgadas a milímetros y de vuelta</h2>
+    <p class="lead">1 pulgada = 25,4 mm. Escribe una medida en cualquiera de los dos campos.</p>
+    <div class="calc">
+      <label>Milímetros<input type="text" inputmode="decimal" id="cMm" class="wide" value="22"></label>
+      <span class="eq" aria-hidden="true">=</span>
+      <label>Pulgadas (decimal)<input type="text" inputmode="decimal" id="cIn" class="wide"></label>
+    </div>
+    <div class="cres" id="cRes" aria-live="polite"></div>
+    <div class="tapebox" id="cTape"></div>
+    <h3>Medidas comunes de taller</h3>
+    <p class="cap" style="margin-top:0">Toca una medida para verla en la cinta.</p>
+    <table class="conv" id="cTable"></table>
+  </div>
+
+  <div class="sheet" id="cvBox" data-check="#cvCheck">
+    <h2>Practica la conversión</h2>
+    <div id="cvPick"></div>
+    <p class="task" id="cvTask"></p>
+    <div id="cvAns"></div>
+    <div class="fb" id="cvFb" role="status" aria-live="polite"></div>
+    <div class="actions">
+      <button class="btn" id="cvCheck" type="button">Comprobar</button>
+      <button class="btn" id="cvNext" type="button" hidden>Siguiente</button>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>Tu avance se guarda en este dispositivo.</span>
+  <a href="https://www.youtube.com/watch?v=aCmjY_2DCCc" target="_blank" rel="noopener noreferrer">Ver el video de referencia</a>
+  <button class="btn ghost" id="reset" type="button">Reiniciar mi avance</button>
+</footer>
+
+<noscript><p style="padding:16px">Esta aplicación necesita JavaScript para funcionar.</p></noscript>
+
+<script>
+(()=>{
+'use strict';
+const MM=25.4, U16=MM/16;
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+const fmt=(x,d=2)=>{let s=(+x).toFixed(d);if(s.includes('.'))s=s.replace(/0+$/,'').replace(/\.$/,'');return s.replace('.',',');};
+const parseNum=s=>{const v=parseFloat(String(s).trim().replace(',','.'));return isFinite(v)?v:NaN;};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* ---------- Progreso ---------- */
+const KEY='flexo-lhmc-v1';
+let prog={pts:0,done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object'){prog.pts=+s.pts||0;prog.done=s.done||{};}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(prog));}catch(e){}};
+const cnt=k=>Math.min(5,prog.done[k]||0);
+const renderPts=()=>{$('#pts').textContent=prog.pts;};
+function bump(key,pts){const b=prog.done[key]||0;prog.done[key]=b+1;prog.pts+=pts;save();renderPts();return b<5&&b+1>=5;}
+
+/* ---------- Texto de medidas ---------- */
+function simp16(r){if(r===0)return[0,1];const g=gcd(r,16);return[r/g,16/g];}
+function fracHTML(n){
+  const w=Math.floor(n/16),r=n%16,[a,b]=simp16(r);
+  let h='<span class="mix">';
+  if(w>0||r===0)h+=`<span class="w">${w}</span>`;
+  if(r>0)h+=`<span class="fr"><span class="n">${a}</span><span class="d">${b}</span></span>`;
+  return h+'<span class="u">″</span></span>';
+}
+function fracText(n){
+  const w=Math.floor(n/16),r=n%16;
+  if(r===0)return `${w}″`;
+  const[a,b]=simp16(r);return `${w?w+' ':''}${a}/${b}″`;
+}
+function mmText(v){
+  const c=Math.floor(v/10),r=v%10;
+  if(c===0)return `${r} mm`;
+  if(r===0)return `${c} cm`;
+  return `${c} cm ${r} mm`;
+}
+
+/* ---------- Dibujo de la cinta ---------- */
+let uid=0;
+function tapeSVG(o){
+  const W=o.W,pad=16,iw=W-2*pad,from=o.from,span=o.span,to=from+span;
+  const X=mm=>pad+(mm-from)/span*iw, ppm=iw/span, sys=o.system;
+  const pz=o.pieza?46:0, top=pz+(o.handle?18:8), bh=sys==='both'?130:92, H=top+bh+12, id='g'+(++uid);
+  const x0=from<=0?X(0):0;
+  let s=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">`;
+  s+=`<defs><linearGradient id="${id}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDD55"/><stop offset="1" stop-color="#F5B800"/></linearGradient>`;
+  s+=`<linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CBD4DD"/><stop offset="1" stop-color="#8794A1"/></linearGradient></defs>`;
+  if(o.pieza&&o.marker!=null){
+    const xe=X(o.marker), xs=from<=0?x0:-6;
+    s+=`<rect x="${xs}" y="6" width="${Math.max(0,xe-xs)}" height="${pz-6}" fill="url(#${id}p)" stroke="#4A5663" stroke-width="1.5"/>`;
+    s+=`<line x1="${xs}" y1="${14}" x2="${xe}" y2="${14}" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>`;
+    if(o.label)s+=`<text class="tn" x="${xs<0?12:xs+12}" y="35" style="font-size:16px">${o.label}</text>`;
+  }
+  s+=`<rect x="${x0}" y="${top}" width="${W-x0}" height="${bh}" fill="url(#${id}b)"/>`;
+  s+=`<line x1="${x0}" y1="${top}" x2="${W}" y2="${top}" stroke="#111" stroke-width="2"/><line x1="${x0}" y1="${top+bh}" x2="${W}" y2="${top+bh}" stroke="#111" stroke-width="2"/>`;
+  if(from<=0){
+    s+=`<rect x="${x0-9}" y="${top-5}" width="9" height="${bh+10}" fill="url(#${id}p)" stroke="#333" stroke-width="1.5"/>`;
+  }
+  if(o.hi){
+    const a=X(o.hi[0]),b=X(o.hi[1]);
+    s+=`<rect x="${Math.min(a,b)}" y="${top}" width="${Math.abs(b-a)}" height="${bh}" fill="#1D4ED8" fill-opacity=".25"/>`;
+  }
+  if(sys!=='in'){
+    const lo=Math.ceil(from-1e-6),hi=Math.floor(to+1e-6);
+    for(let i=lo;i<=hi;i++){
+      const c10=i%10===0,c5=i%5===0;
+      if(!c10&&!c5&&ppm<2.2)continue;
+      const L=c10?32:c5?22:13,x=X(i);
+      s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+L}" stroke="#111" stroke-width="${c10?1.8:c5?1.4:1}"/>`;
+      if(c10){
+        const zero=i===0&&from<=0;
+        s+=`<text class="tn" x="${zero?x+5:x}" y="${top+L+17}" text-anchor="${zero?'start':'middle'}">${i/10}</text>`;
+      }
+    }
+    if(sys==='mm')s+=`<text class="tu" x="${W-pad}" y="${top+bh-8}" text-anchor="end">centímetros (cm)</text>`;
+  }
+  if(sys!=='mm'){
+    const bottom=sys==='both',y0=bottom?top+bh:top;
+    const lo=Math.ceil(from/U16-1e-6),hi=Math.floor(to/U16+1e-6);
+    for(let k=lo;k<=hi;k++){
+      const lvl=k%16===0?4:k%8===0?3:k%4===0?2:k%2===0?1:0;
+      if(lvl===0&&ppm*U16<5)continue;
+      if(lvl===1&&ppm*U16<2.5)continue;
+      const L=[9,15,22,29,38][lvl],x=X(k*U16),y2=bottom?y0-L:y0+L;
+      s+=`<line x1="${x}" y1="${y0}" x2="${x}" y2="${y2}" stroke="#111" stroke-width="${lvl===4?1.8:lvl>=2?1.4:1}"/>`;
+      if(lvl===4){
+        const zero=k===0&&from<=0;
+        s+=`<text class="tn" x="${zero?x+5:x}" y="${bottom?y2-6:y2+17}" text-anchor="${zero?'start':'middle'}">${k/16}</text>`;
+      }
+    }
+    if(sys==='in')s+=`<text class="tu" x="${W-pad}" y="${top+bh-8}" text-anchor="end">pulgadas (″)</text>`;
+  }
+  const mk=(mm,color,handle)=>{
+    if(mm==null)return '';
+    const x=X(mm);if(x<pad-6||x>W-pad+6)return '';
+    let t=`<line x1="${x}" y1="${handle?top-14:2}" x2="${x}" y2="${top+bh+7}" stroke="${color}" stroke-width="2.6"/>`;
+    if(handle){
+      t+=`<path d="M${x-10} ${top-19}h20l-10 15z" fill="${color}" stroke="#111" stroke-width="1.2"/>`;
+      t+=`<path d="M${x-10} ${top+bh+12}h20l-10 -15z" fill="${color}" stroke="#111" stroke-width="1.2"/>`;
+    }
+    return t;
+  };
+  s+=mk(o.marker2,'#127A4F',!!o.handle);
+  s+=mk(o.marker,o.mcolor||'#E5484D',!!o.handle);
+  return s+'</svg>';
+}
+const draws=[];
+function mountTape(box,cfg){
+  let lastW=0;
+  const draw=(force)=>{
+    const w=Math.floor(box.clientWidth);
+    if(!w)return;
+    const o=cfg.get();
+    if(!o){box.innerHTML='';lastW=0;return;}
+    o.W=Math.max(280,w);
+    box.innerHTML=tapeSVG(o);box._o=o;lastW=w;
+  };
+  new ResizeObserver(()=>{if(Math.floor(box.clientWidth)!==lastW)draw();}).observe(box);
+  if(cfg.pick){
+    const at=e=>{const r=box.getBoundingClientRect(),o=box._o;if(!o)return;const x=e.clientX-r.left;cfg.pick(o.from+(x-16)/(o.W-32)*o.span);};
+    box.addEventListener('pointerdown',e=>{try{box.setPointerCapture(e.pointerId);}catch(_){}box._drag=true;at(e);});
+    box.addEventListener('pointermove',e=>{if(box._drag)at(e);});
+    ['pointerup','pointercancel'].forEach(t=>box.addEventListener(t,()=>{box._drag=false;}));
+    box.addEventListener('keydown',e=>{
+      if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();cfg.key((e.key==='ArrowRight'?1:-1)*(e.shiftKey?5:1));}
+    });
+  }
+  draws.push(draw);
+  return draw;
+}
+
+/* ---------- Figuras ampliadas ---------- */
+let fig16=false;
+function figCm(W){
+  const pad=18,iw=W-2*pad,top=8,bh=84,X=i=>pad+i/10*iw;
+  let s=`<svg width="${W}" height="${top+bh+8}" viewBox="0 0 ${W} ${top+bh+8}" aria-hidden="true"><rect x="0" y="${top}" width="${W}" height="${bh}" fill="#FFC61A" stroke="#111" stroke-width="2"/>`;
+  for(let i=0;i<=10;i++){
+    const L=i%5===0?(i%10===0?46:34):20,x=X(i);
+    s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+L}" stroke="#111" stroke-width="${i%5===0?1.8:1.2}"/>`;
+    s+=`<text class="fl" x="${x}" y="${top+L+14}" text-anchor="middle" style="font-size:${i%5===0?15:12}px">${i}</text>`;
+  }
+  s+=`<text class="tu" x="${W-pad}" y="${top+bh-8}" text-anchor="end">1 cm ampliado, en mm</text></svg>`;
+  return s;
+}
+function figIn(W){
+  const pad=18,iw=W-2*pad,top=8,bh=100,X=k=>pad+k/16*iw;
+  let s=`<svg width="${W}" height="${top+bh+8}" viewBox="0 0 ${W} ${top+bh+8}" aria-hidden="true"><rect x="0" y="${top}" width="${W}" height="${bh}" fill="#FFC61A" stroke="#111" stroke-width="2"/>`;
+  for(let k=0;k<=16;k++){
+    const lvl=k%16===0?4:k%8===0?3:k%4===0?2:k%2===0?1:0,L=[14,26,38,52,60][lvl],x=X(k);
+    s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+L}" stroke="#111" stroke-width="${lvl>=2?1.8:1.2}"/>`;
+    let t;
+    if(k===0)t='0';else if(k===16)t='1″';
+    else if(fig16)t=`${k}/16`;
+    else{const[a,b]=simp16(k);t=`${a}/${b}`;}
+    s+=`<text class="fl" x="${x}" y="${top+L+13}" text-anchor="middle" style="font-size:${[10.5,11.5,12.5,13.5,15][lvl]}px">${t}</text>`;
+  }
+  s+=`<text class="tu" x="${W-pad}" y="${top+bh-6}" text-anchor="end">1″ ampliada</text></svg>`;
+  return s;
+}
+function mountFig(box,fn){
+  let lw=0;
+  const d=()=>{const w=Math.floor(box.clientWidth);if(!w)return;box.innerHTML=fn(Math.max(280,w));lw=w;};
+  new ResizeObserver(()=>{if(Math.floor(box.clientWidth)!==lw)d();}).observe(box);
+  draws.push(d);return d;
+}
+const drawCm=mountFig($('#figCm'),figCm);
+const drawIn=mountFig($('#figIn'),W=>figIn(W));
+$('#fig16').addEventListener('click',e=>{fig16=!fig16;e.target.textContent=fig16?'Ver simplificado':'Ver todo en dieciseisavos';drawIn();});
+
+/* ---------- Explorador ---------- */
+const Ex={from:0,span:80,snap:'mm',cur:40,rel:.5};
+const exUnit=()=>Ex.snap==='mm'?1:U16;
+function exSnap(mm){
+  const u=exUnit(),lo=Math.ceil(Ex.from/u-1e-6)*u,hi=Math.floor((Ex.from+Ex.span)/u+1e-6)*u;
+  return clamp(Math.round(mm/u)*u,lo,hi);
+}
+function exRead(){
+  const c=Ex.cur;
+  if(Ex.snap==='mm'){
+    const v=Math.round(c),n=Math.round(c/U16);
+    $('#rdMm').textContent=mmText(v);
+    $('#rdMmS').textContent=`${v} mm = ${fmt(v/10,1)} cm`;
+    $('#rdIn').innerHTML=fracHTML(n);
+    $('#rdInS').textContent=`aprox.: la raya de 1/16 más cercana (${fmt(c/MM,3)}″)`;
+  }else{
+    const n=Math.round(c/U16);
+    $('#rdIn').innerHTML=fracHTML(n);
+    $('#rdInS').textContent=`= ${fmt(n/16,4)} pulgadas`;
+    $('#rdMm').textContent=`${fmt(c,1)} mm`;
+    $('#rdMmS').textContent=`= ${fmt(c/10,2)} cm`;
+  }
+}
+const exDraw=mountTape($('#exTape'),{
+  get:()=>({system:'both',from:Ex.from,span:Ex.span,marker:Ex.cur,handle:true}),
+  pick:mm=>{Ex.cur=exSnap(mm);Ex.rel=(Ex.cur-Ex.from)/Ex.span;exRead();exDraw();},
+  key:d=>{Ex.cur=exSnap(Ex.cur+d*exUnit());Ex.rel=(Ex.cur-Ex.from)/Ex.span;exRead();exDraw();}
+});
+function exRefresh(){Ex.cur=exSnap(Ex.from+Ex.rel*Ex.span);exRead();exDraw();}
+$('#exFrom').addEventListener('input',e=>{Ex.from=+e.target.value;exRefresh();});
+$('#exZoom').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  Ex.span=+b.dataset.zoom;$$('#exZoom button').forEach(x=>x.setAttribute('aria-pressed',x===b));exRefresh();
+});
+$('#exSnap').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  Ex.snap=b.dataset.sys;$$('#exSnap button').forEach(x=>x.setAttribute('aria-pressed',x===b));exRefresh();
+});
+
+/* ---------- Partes ---------- */
+const PARTS=[
+ ['carcasa','Carcasa','Guarda la cinta enrollada. En muchos flexómetros trae impreso su ancho: sirve para medir interiores.'],
+ ['cinta','Cinta','La hoja de acero con las escalas: milímetros por un borde y pulgadas por el otro. Su forma curva la mantiene firme al extenderla.'],
+ ['gancho','Gancho','Se mueve un poquito a propósito. Ese juego es igual a su grosor, así la medida sale bien tanto si tiras del borde (exterior) como si empujas contra una pared (interior).'],
+ ['freno','Freno','Mantiene la cinta extendida. Suéltalo con cuidado: si la cinta se recoge de golpe, puede golpearte o cortarte.'],
+ ['clip','Clip','Se engancha al cinturón o al bolsillo para llevar el flexómetro a mano.']
+];
+(function(){
+  let t='<g class="part" data-part="cinta"><rect x="150" y="76" width="205" height="20" fill="#FFC61A" stroke="#111" stroke-width="2"/>';
+  for(let i=0;i<20;i++)t+=`<path d="M${162+i*9.5} 76v${i%5===0?12:7}" stroke="#111" stroke-width="1.2" fill="none"/>`;
+  t+='</g><g class="part" data-part="gancho"><rect x="355" y="60" width="10" height="52" rx="2" fill="#9AA5B1" stroke="#111" stroke-width="2"/></g>';
+  t+='<g class="part" data-part="carcasa"><rect x="22" y="26" width="142" height="118" rx="28" fill="#FFC61A" stroke="#111" stroke-width="3"/><circle cx="93" cy="85" r="34" fill="none" stroke="#111" stroke-opacity=".25" stroke-width="4"/></g>';
+  t+='<g class="part" data-part="freno"><rect x="80" y="10" width="46" height="18" rx="5" fill="#E5484D" stroke="#111" stroke-width="2"/></g>';
+  t+='<g class="part" data-part="clip"><rect x="44" y="144" width="72" height="12" rx="4" fill="#3A4657" stroke="#111" stroke-width="2"/></g>';
+  $('#partsSvg').innerHTML=t;
+  $('#partChips').innerHTML=PARTS.map(p=>`<button type="button" data-part="${p[0]}" aria-pressed="false">${p[1]}</button>`).join('');
+  const set=id=>{
+    $$('#partsSvg .part').forEach(g=>g.classList.toggle('active',g.dataset.part===id));
+    $$('#partChips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.part===id));
+    const p=PARTS.find(x=>x[0]===id);$('#partDesc').innerHTML=`<b>${p[1]}.</b> ${p[2]}`;
+  };
+  $('#partsSvg').addEventListener('click',e=>{const g=e.target.closest('.part');if(g)set(g.dataset.part);});
+  $('#partChips').addEventListener('click',e=>{const b=e.target.closest('button');if(b)set(b.dataset.part);});
+  set('gancho');
+})();
+
+/* ---------- Preguntas ---------- */
+function genMm(l){
+  let v;
+  if(l===1)v=5*rnd(3,60);else{do{v=rnd(12,300);}while(v%5===0&&Math.random()<.7);}
+  const span=l===1?100:60,off=l===1?10*rnd(1,7):10*rnd(1,4);
+  return{sys:'mm',l,v,from:Math.max(0,Math.floor(v/10)*10-off),span};
+}
+function genIn(l){
+  const step=l===1?4:l===2?2:1;let n;
+  if(l===3){do{n=rnd(3,140);}while(n%16===0||(n%2===0&&Math.random()<.65));}
+  else n=step*rnd(1,Math.floor(140/step));
+  const whole=Math.floor(n/16),spanIn=l===1?3:2.25,back=rnd(0,l===1?2:1);
+  return{sys:'in',l,v:n,from:Math.max(0,whole-back)*MM,span:spanIn*MM};
+}
+const gen=(s,l)=>s==='mm'?genMm(l):genIn(l);
+const posMm=q=>q.sys==='mm'?q.v:q.v*U16;
+const unitOf=s=>s==='mm'?1:U16;
+
+function explainMm(v){
+  const cm=Math.floor(v/10),r=v%10;
+  if(r===0)return `La marca cae justo sobre el número ${cm}: <b>${cm} cm = ${v} mm</b>.`;
+  return `Parte del número ${cm} (${cm*10} mm) y cuenta ${r} raya${r>1?'s':''} de 1 mm${r===5?' (la raya mediana es la de 5 mm)':''}. Lectura: <b>${cm} cm ${r} mm = ${v} mm</b>.`;
+}
+function explainIn(n){
+  const w=Math.floor(n/16),r=n%16;
+  if(r===0)return `La marca cae justo sobre el número ${w}: <b>${w}″</b>.`;
+  const[a,b]=simp16(r),nm={2:'medios',4:'cuartos',8:'octavos',16:'dieciseisavos'}[b];
+  let t=`Parte del ${w===0?'inicio (0)':'número '+w} y cuenta ${r} raya${r>1?'s':''} de 1/16: son ${r}/16.`;
+  t+=b!==16?` Se simplifica: ${r}/16 = ${a}/${b}.`:' Ya está simplificada.';
+  return t+` Es una raya de ${nm}. Lectura: <b>${fracText(n)}</b>.`;
+}
+const explain=(s,v)=>s==='mm'?explainMm(v):explainIn(v);
+
+/* ---------- Selector de unidad y nivel ---------- */
+const LV={mm:['Centímetros y medios','Milímetros'],in:['Medios y cuartos','Octavos','Dieciseisavos']};
+function tks(key){
+  const n=cnt(key);
+  return `<span class="tks${n>=5?' full':''}" role="img" aria-label="${n} de 5">${[0,1,2,3,4].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`;
+}
+function pickerHTML(mode,sys,lvl){
+  const sb=(s,t)=>`<button type="button" data-sys="${s}" aria-pressed="${sys===s}">${t}</button>`;
+  let h=`<div class="seg" role="group" aria-label="Unidad">${sb('mm','Milímetros')}${sb('in','Pulgadas')}</div><div class="lvls" role="group" aria-label="Nivel">`;
+  LV[sys].forEach((n,i)=>{
+    const id=i+1,k=`${mode}:${sys}:${id}`;
+    h+=`<button type="button" class="lvl" data-level="${id}" aria-pressed="${lvl===id}"><span class="ln">${n}</span>${tks(k)}${cnt(k)>=5?'<span class="done">Nivel superado</span>':''}</button>`;
+  });
+  return h+'</div>';
+}
+function bindPicker(box,st,onChange){
+  box.addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.sys){st.sys=b.dataset.sys;st.lvl=1;onChange();}
+    else if(b.dataset.level){st.lvl=+b.dataset.level;onChange();}
+  });
+}
+
+/* ---------- Respuestas ---------- */
+function answerHTML(sys,p){
+  if(sys==='mm')return `<p class="cap">Escribe la lectura en centímetros y milímetros. Por ejemplo, 7 cm 4 mm.</p><div class="ans"><input id="${p}Cm" type="number" inputmode="numeric" min="0" max="999" placeholder="0" aria-label="Centímetros"><span class="un">cm</span><input id="${p}Mm" type="number" inputmode="numeric" min="0" max="99" placeholder="0" aria-label="Milímetros"><span class="un">mm</span></div>`;
+  return `<p class="cap">Escribe las pulgadas enteras y la fracción ya simplificada. Por ejemplo, 2 y 3/8.</p><div class="ans"><input id="${p}W" type="number" inputmode="numeric" min="0" max="99" placeholder="0" aria-label="Pulgadas enteras"><div class="fbox"><input id="${p}N" type="number" inputmode="numeric" min="0" max="31" placeholder="n" aria-label="Numerador"><span class="bar"></span><select id="${p}D" aria-label="Denominador"><option value="">d</option><option>2</option><option>4</option><option>8</option><option>16</option></select></div><span class="un">″</span></div>`;
+}
+function readAns(sys,p){
+  const v=id=>($('#'+p+id).value||'').trim();
+  if(sys==='mm'){
+    const c=v('Cm'),m=v('Mm');if(c===''&&m==='')return{empty:true};
+    return{total:(+c||0)*10+(+m||0)};
+  }
+  const w=v('W'),n=v('N'),d=v('D');
+  if(w===''&&n===''&&d==='')return{empty:true};
+  const W=+w||0,N=+n||0,D=+d||0;
+  if(N>0&&!D)return{err:'Elige el denominador de la fracción: 2, 4, 8 o 16.'};
+  if(D&&n==='')return{err:'Escribe el numerador de la fracción.'};
+  return{total:W*16+(N?N*(16/D):0),simplified:N===0||(N<D&&gcd(N,D)===1)};
+}
+const setFb=(id,k,h)=>{const e=$(id);e.className='fb'+(k?' '+k:'');e.innerHTML=h;};
+
+/* ---------- LEE ---------- */
+const Lee={sys:'mm',lvl:1,q:null,tries:0,done:false,ok:false,hint:false};
+const leeDraw=mountTape($('#leeTape'),{
+  get:()=>{
+    const q=Lee.q;if(!q)return null;
+    const p=posMm(q),base=q.sys==='mm'?Math.floor(q.v/10)*10:Math.floor(q.v/16)*MM;
+    return{system:q.sys,from:q.from,span:q.span,marker:p,pieza:true,hi:Lee.hint?[base,p]:null,mcolor:Lee.done&&Lee.ok?'#127A4F':'#E5484D'};
+  }
+});
+function leeRender(){
+  $('#leeBox').dataset.unit=Lee.sys;
+  $('#leePick').innerHTML=pickerHTML('lee',Lee.sys,Lee.lvl);
+  $('#leeAns').innerHTML=answerHTML(Lee.sys,'lee');
+  setFb('#leeFb','','');
+  $('#leeCheck').disabled=false;$('#leeHint').disabled=false;$('#leeNext').hidden=true;
+  leeDraw();
+}
+function leeNew(){Lee.q=gen(Lee.sys,Lee.lvl);Lee.tries=0;Lee.done=false;Lee.ok=false;Lee.hint=false;leeRender();}
+bindPicker($('#leePick'),Lee,leeNew);
+$('#leeNext').addEventListener('click',leeNew);
+$('#leeHint').addEventListener('click',()=>{
+  Lee.hint=true;leeDraw();
+  const q=Lee.q;
+  setFb('#leeFb','info',q.sys==='mm'
+    ?`La zona azul va desde el último número hasta la marca. Cuenta las rayas ahí: cada raya chica vale 1 mm y la mediana vale 5 mm.`
+    :`La zona azul va desde el último número hasta la marca. Entre dos números hay 16 espacios iguales: cuéntalos y simplifica la fracción.`);
+});
+function finish(pfx,ok,key,pts,fbId,extra){
+  const up=ok?bump(key,pts):false;
+  return up?`${extra} <b>¡Nivel superado!</b>`:extra;
+}
+$('#leeCheck').addEventListener('click',()=>{
+  if(Lee.done)return;
+  const a=readAns(Lee.sys,'lee');
+  if(a.empty)return setFb('#leeFb','warn','Escribe tu lectura antes de comprobar.');
+  if(a.err)return setFb('#leeFb','warn',a.err);
+  if(a.total===Lee.q.v){
+    if(Lee.sys==='in'&&!a.simplified)return setFb('#leeFb','warn','El valor está bien, pero falta simplificar la fracción. Redúcela y vuelve a comprobar.');
+    const pts=(Lee.tries===0&&!Lee.hint)?2:1;
+    Lee.done=true;Lee.ok=true;
+    const html=finish('lee',true,`lee:${Lee.sys}:${Lee.lvl}`,pts,'#leeFb',`<b>¡Correcto!</b> +${pts} punto${pts>1?'s':''}. ${explain(Lee.sys,Lee.q.v)}`);
+    setFb('#leeFb','ok',html);
+    $('#leeCheck').disabled=true;$('#leeHint').disabled=true;$('#leeNext').hidden=false;leeDraw();$('#leePick').innerHTML=pickerHTML('lee',Lee.sys,Lee.lvl);
+    return;
+  }
+  Lee.tries++;
+  if(Lee.tries===1){
+    setFb('#leeFb','bad',`Todavía no. Tu lectura es ${a.total>Lee.q.v?'mayor':'menor'} que la real. Mira otra vez la marca o pide una pista.`);
+  }else{
+    Lee.done=true;Lee.ok=false;
+    setFb('#leeFb','bad',`Esta vez no salió. ${explain(Lee.sys,Lee.q.v)}`);
+    $('#leeCheck').disabled=true;$('#leeHint').disabled=true;$('#leeNext').hidden=false;leeDraw();
+  }
+});
+
+/* ---------- MARCA ---------- */
+const Ma={sys:'mm',lvl:1,q:null,cur:0,tries:0,done:false,ok:false};
+const maRange=()=>{const u=unitOf(Ma.sys);return[Math.ceil(Ma.q.from/u-1e-6),Math.floor((Ma.q.from+Ma.q.span)/u+1e-6)];};
+const maDraw=mountTape($('#maTape'),{
+  get:()=>{
+    const q=Ma.q;if(!q)return null;
+    return{system:q.sys,from:q.from,span:q.span,marker:Ma.cur*unitOf(q.sys),handle:true,
+      marker2:Ma.done?posMm(q):null,mcolor:Ma.done&&Ma.ok?'#127A4F':'#E5484D'};
+  },
+  pick:mm=>{if(Ma.done)return;const[lo,hi]=maRange();Ma.cur=clamp(Math.round(mm/unitOf(Ma.sys)),lo,hi);maDraw();},
+  key:d=>{if(Ma.done)return;const[lo,hi]=maRange();Ma.cur=clamp(Ma.cur+d,lo,hi);maDraw();}
+});
+function maRender(){
+  $('#maBox').dataset.unit=Ma.sys;
+  $('#maPick').innerHTML=pickerHTML('marca',Ma.sys,Ma.lvl);
+  $('#maTask').innerHTML=Ma.sys==='mm'
+    ?`Lleva la marca a <b class="tgt">${mmText(Ma.q.v)}</b> (${Ma.q.v} mm)`
+    :`Lleva la marca a <b class="tgt">${fracHTML(Ma.q.v)}</b>`;
+  setFb('#maFb','','');
+  ['#maCheck','#maLeft','#maRight'].forEach(s=>$(s).disabled=false);$('#maNext').hidden=true;
+  maDraw();
+}
+function maNew(){
+  Ma.q=gen(Ma.sys,Ma.lvl);Ma.tries=0;Ma.done=false;Ma.ok=false;
+  const[lo,hi]=maRange();let t;
+  do{t=lo+Math.round((hi-lo)*rnd(20,80)/100);}while(t===Ma.q.v);
+  Ma.cur=t;maRender();
+}
+bindPicker($('#maPick'),Ma,maNew);
+$('#maNext').addEventListener('click',maNew);
+$('#maLeft').addEventListener('click',()=>{if(Ma.done)return;const[lo]=maRange();Ma.cur=Math.max(lo,Ma.cur-1);maDraw();});
+$('#maRight').addEventListener('click',()=>{if(Ma.done)return;const[,hi]=maRange();Ma.cur=Math.min(hi,Ma.cur+1);maDraw();});
+function maEnd(){['#maCheck','#maLeft','#maRight'].forEach(s=>$(s).disabled=true);$('#maNext').hidden=false;maDraw();}
+$('#maCheck').addEventListener('click',()=>{
+  if(Ma.done)return;
+  const d=Ma.cur-Ma.q.v;
+  if(d===0){
+    const pts=Ma.tries===0?2:1;Ma.done=true;Ma.ok=true;
+    const html=finish('ma',true,`marca:${Ma.sys}:${Ma.lvl}`,pts,'#maFb',`<b>¡Justo en la medida!</b> +${pts} punto${pts>1?'s':''}. ${explain(Ma.sys,Ma.q.v)}`);
+    setFb('#maFb','ok',html);maEnd();$('#maPick').innerHTML=pickerHTML('marca',Ma.sys,Ma.lvl);return;
+  }
+  Ma.tries++;
+  if(Ma.tries===1){
+    setFb('#maFb','bad',`${Math.abs(d)<=2?'Muy cerca. ':'Todavía no. '}Tu marca está ${d>0?'a la derecha':'a la izquierda'} de la medida pedida. Ajústala y vuelve a comprobar.`);
+  }else{
+    Ma.done=true;Ma.ok=false;
+    setFb('#maFb','bad',`Esta vez no salió. La marca verde muestra dónde estaba la medida. ${explain(Ma.sys,Ma.q.v)}`);maEnd();
+  }
+});
+
+/* ---------- CONVIERTE: calculadora ---------- */
+const Cc={mm:22};
+const cDraw=mountTape($('#cTape'),{
+  get:()=>{
+    const m=Cc.mm;if(!isFinite(m)||m<0||m>2000)return null;
+    const from=Math.floor(m/MM)*MM;
+    return{system:'both',from,span:2.5*MM,marker:m,handle:true};
+  }
+});
+function cRender(){
+  const m=Cc.mm;
+  if(!isFinite(m)||m<0){$('#cRes').innerHTML='<span class="cap">Escribe una medida positiva.</span>';cDraw();return;}
+  const n=Math.round(m/U16),diff=Math.abs(m-n*U16);
+  $('#cRes').innerHTML=`<div><div class="cap" style="margin:0">Centímetros</div><div class="big">${fmt(m/10,2)} cm</div></div>
+   <div><div class="cap" style="margin:0">Pulgadas</div><div class="big">${fmt(m/MM,4)}″</div></div>
+   <div><div class="cap" style="margin:0">Fracción de 1/16 más cercana</div><div class="big">${fracHTML(n)}</div>${diff>0.005?`<div class="cap" style="margin:0">diferencia de ${fmt(diff,2)} mm</div>`:'<div class="cap" style="margin:0">medida exacta</div>'}</div>`;
+  cDraw();
+}
+$('#cMm').addEventListener('input',e=>{
+  const v=parseNum(e.target.value);Cc.mm=v;
+  $('#cIn').value=isFinite(v)?fmt(v/MM,4):'';cRender();
+});
+$('#cIn').addEventListener('input',e=>{
+  const v=parseNum(e.target.value);Cc.mm=isFinite(v)?v*MM:NaN;
+  $('#cMm').value=isFinite(v)?fmt(v*MM,2):'';cRender();
+});
+(function(){
+  const rows=[[1,8],[1,4],[5,16],[3,8],[1,2],[5,8],[3,4],[7,8],[1,1],[1.25,1],[1.5,1]];
+  let h='<tr><th>Pulgadas</th><th>Milímetros</th></tr>';
+  [[2,16],[4,16],[5,16],[6,16],[8,16],[10,16],[12,16],[14,16],[16,16],[20,16],[24,16]].forEach(([n])=>{
+    h+=`<tr><td><button type="button" data-n="${n}" aria-label="Cargar ${fracText(n)} en el convertidor">${fracHTML(n)}</button></td><td>${fmt(n*U16,2)} mm</td></tr>`;
+  });
+  $('#cTable').innerHTML=h;
+  $('#cTable').addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    const m=+b.dataset.n*U16;Cc.mm=m;$('#cMm').value=fmt(m,2);$('#cIn').value=fmt(m/MM,4);cRender();
+    $('#cTape').scrollIntoView({block:'nearest',behavior:'smooth'});
+  });
+})();
+$('#cIn').value=fmt(22/MM,4);
+
+/* ---------- CONVIERTE: práctica ---------- */
+const Cv={mode:'a',q:null,tries:0,done:false};
+function cvPicker(){
+  const b=(m,t)=>`<button type="button" class="lvl" data-mode="${m}" aria-pressed="${Cv.mode===m}"><span class="ln">${t}</span>${tks('conv:'+m)}${cnt('conv:'+m)>=5?'<span class="done">Nivel superado</span>':''}</button>`;
+  $('#cvPick').innerHTML=`<div class="lvls" role="group" aria-label="Tipo de conversión">${b('a','De pulgadas a milímetros')}${b('b','De milímetros a pulgadas')}</div>`;
+}
+function cvNew(){
+  Cv.tries=0;Cv.done=false;
+  if(Cv.mode==='a'){
+    Cv.q={n:rnd(2,64)};
+    $('#cvTask').innerHTML=`Convierte <span class="tgt">${fracHTML(Cv.q.n)}</span> a milímetros. Aproxima con 1 o 2 decimales.`;
+    $('#cvAns').innerHTML=`<div class="ans"><input id="cvA" type="text" inputmode="decimal" class="wide" placeholder="0,0" aria-label="Milímetros"><span class="un">mm</span></div>`;
+  }else{
+    let mm,x;
+    do{mm=rnd(4,100);x=mm/U16;}while(Math.abs(x-Math.floor(x)-.5)<.12);
+    Cv.q={mm,n:Math.round(x)};
+    $('#cvTask').innerHTML=`Convierte <span class="tgt">${mm} mm</span> a pulgadas. Elige la fracción de 1/16 más cercana.`;
+    $('#cvAns').innerHTML=answerHTML('in','cv');
+  }
+  cvPicker();setFb('#cvFb','','');$('#cvCheck').disabled=false;$('#cvNext').hidden=true;
+  $('#cvBox').dataset.unit=Cv.mode==='a'?'mm':'in';
+}
+$('#cvPick').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.dataset.mode){Cv.mode=b.dataset.mode;cvNew();}});
+$('#cvNext').addEventListener('click',cvNew);
+function cvEnd(){$('#cvCheck').disabled=true;$('#cvNext').hidden=false;}
+function cvExplain(){
+  if(Cv.mode==='a')return `${fracText(Cv.q.n)} = ${fmt(Cv.q.n/16,4)}″. Multiplica por 25,4: <b>${fmt(Cv.q.n*U16,2)} mm</b>.`;
+  return `${Cv.q.mm} ÷ 25,4 = ${fmt(Cv.q.mm/MM,3)}″. Multiplica por 16: ${fmt(Cv.q.mm/U16,1)} ≈ ${Cv.q.n} dieciseisavos. Simplificado: <b>${fracText(Cv.q.n)}</b>.`;
+}
+$('#cvCheck').addEventListener('click',()=>{
+  if(Cv.done)return;
+  let ok=false,dir=0;
+  if(Cv.mode==='a'){
+    const v=parseNum($('#cvA').value);
+    if(!isFinite(v))return setFb('#cvFb','warn','Escribe un número. Puedes usar coma o punto para los decimales.');
+    const t=Cv.q.n*U16;ok=Math.abs(v-t)<=0.06;dir=v>t?1:-1;
+  }else{
+    const a=readAns('in','cv');
+    if(a.empty)return setFb('#cvFb','warn','Escribe tu respuesta antes de comprobar.');
+    if(a.err)return setFb('#cvFb','warn',a.err);
+    if(a.total===Cv.q.n){
+      if(!a.simplified)return setFb('#cvFb','warn','El valor está bien, pero falta simplificar la fracción. Redúcela y vuelve a comprobar.');
+      ok=true;
+    }else dir=a.total>Cv.q.n?1:-1;
+  }
+  if(ok){
+    const pts=Cv.tries===0?2:1;Cv.done=true;
+    const html=finish('cv',true,'conv:'+Cv.mode,pts,'#cvFb',`<b>¡Correcto!</b> +${pts} punto${pts>1?'s':''}. ${cvExplain()}`);
+    setFb('#cvFb','ok',html);cvEnd();cvPicker();return;
+  }
+  Cv.tries++;
+  if(Cv.tries===1){
+    setFb('#cvFb','bad',`Todavía no. Tu respuesta es ${dir>0?'mayor':'menor'} que la correcta. ${Cv.mode==='a'?'Recuerda: pulgadas × 25,4 = mm.':'Recuerda: mm ÷ 25,4 = pulgadas. Luego multiplica por 16 para saber cuántos dieciseisavos son.'}`);
+  }else{
+    Cv.done=true;setFb('#cvFb','bad',`Esta vez no salió. ${cvExplain()}`);cvEnd();
+  }
+});
+
+/* ---------- PIEZAS DE TALLER ---------- */
+const PZK=[['pzmm','Largo de pieza en mm'],['pzin','Largo de pieza en pulgadas'],['corte','Cortes de barra'],['int','Medida interior'],['suma','Sumas y restas en pulgadas'],['broca','Brocas y llaves']];
+const PIEZAS=[['el','eje de acero'],['el','tubo de cobre'],['el','perfil cuadrado'],['el','ángulo de acero'],['la','barra de fierro'],['el','listón de pino'],['la','platina'],['la','cañería de PVC']];
+const choice=a=>a[rnd(0,a.length-1)];
+const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);
+const Pz={kind:'pzmm',q:null,tries:0,done:false,ok:false};
+function pzGen(kind){
+  if(kind==='pzmm'||kind==='pzin'){
+    const[art,name]=choice(PIEZAS),b=kind==='pzmm'?genMm(2):genIn(rnd(2,3));
+    const uso=choice(['para la lista de corte','para pedir el material','para anotarlo en la ficha de taller','para revisar el plano']);
+    return{kind,ans:kind==='pzmm'?'cmmm':'frac',sys:b.sys,v:b.v,from:b.from,span:b.span,label:cap(name),
+      html:`Mide ${art} <b>${name}</b> ${uso}. ¿Cuánto mide de largo?`};
+  }
+  if(kind==='corte'){
+    const L=choice([1000,1200,1500,2000,3000]),n=rnd(2,5),k=choice([2,3,4]);
+    const hi=Math.floor(Math.floor((L-n*k-30)/n)/5),lo=Math.max(8,hi-12),p=5*rnd(lo,hi);
+    const[art,name]=choice(PIEZAS),ind=art==='el'?'un':'una';
+    return{kind,ans:'int',sys:'mm',v:L-n*(p+k),L,n,k,p,
+      html:`De ${ind} <b>${name}</b> de <b>${L} mm</b> cortas <b>${n} trozos</b> iguales de <b>${p} mm</b>. La sierra gasta <b>${k} mm</b> en cada corte, y haces un corte después de cada trozo. ¿Cuántos mm sobran?`};
+  }
+  if(kind==='int'){
+    const cw=choice([70,75,76,80]),r=rnd(150,900);
+    const obj=choice(['el ancho interior de un marco de ventana','el ancho de un nicho de mueble','el ancho interior de una caja de herramientas','el ancho de un hueco de puerta']);
+    return{kind,ans:'int',sys:'mm',v:r+cw,r,cw,
+      html:`Quieres medir ${obj}. Apoyas la carcasa del flexómetro contra una pared, el gancho contra la otra, y en la cinta lees <b>${r} mm</b>. La carcasa mide <b>${cw} mm</b> (viene impreso). ¿Cuánto mide el ancho real?`};
+  }
+  if(kind==='suma'){
+    const st=Math.random()<.3?1:2;
+    if(Math.random()<.55){
+      const a=st*rnd(Math.ceil(8/st),Math.floor(90/st)),b=st*rnd(Math.ceil(8/st),Math.floor(90/st));
+      return{kind,ans:'frac',sys:'in',op:'+',a,b,v:a+b,
+        html:`Un marco de madera lleva dos travesaños: uno de <b>${fracHTML(a)}</b> y otro de <b>${fracHTML(b)}</b>. Si los pones uno a continuación del otro, ¿cuánto miden juntos?`};
+    }
+    const T=st*rnd(Math.ceil(50/st),Math.floor(140/st)),c=st*rnd(Math.ceil(12/st),Math.floor((T-12)/st));
+    return{kind,ans:'frac',sys:'in',op:'-',T,c,v:T-c,
+      html:`Una tabla mide <b>${fracHTML(T)}</b>. Cortas un trozo de <b>${fracHTML(c)}</b> (no cuentes lo que gasta la sierra). ¿Cuánto sobra?`};
+  }
+  if(Math.random()<.5){
+    const n=choice([4,5,6,7,8,9,10,11,12,14,16,20,24]),[art,cosa]=choice([['una','llave de boca'],['una','broca'],['una','copa'],['un','perno']]);
+    return{kind,ans:'dec',sys:'in',dir:'a',n,v:n*U16,
+      html:`Vas a usar ${art} ${cosa} de <b>${fracHTML(n)}</b>. ¿A cuántos milímetros equivale? Aproxima con 1 o 2 decimales.`};
+  }
+  let mm,x;
+  do{mm=rnd(3,25);x=mm/U16;}while(Math.abs(x-Math.floor(x)-.5)<.12);
+  const n=Math.round(x);
+  return{kind,ans:'frac',sys:'in',dir:'b',mm,n,v:n,
+    html:`En el cajón solo hay brocas en pulgadas, de 1/16 en 1/16. Necesitas hacer un agujero de <b>${mm} mm</b>. ¿Qué broca es la más cercana?`};
+}
+function pzExplain(q){
+  if(q.kind==='pzmm')return explainMm(q.v);
+  if(q.kind==='pzin')return explainIn(q.v);
+  if(q.kind==='corte'){const u=q.n*(q.p+q.k);return `${q.n} trozos × ${q.p} mm = ${q.n*q.p} mm. ${q.n} cortes × ${q.k} mm = ${q.n*q.k} mm. Se usan ${u} mm en total. Sobran ${q.L} − ${u} = <b>${q.v} mm</b>.`;}
+  if(q.kind==='int')return `La lectura no incluye la carcasa, así que la sumas: ${q.r} mm + ${q.cw} mm = <b>${q.v} mm</b>.`;
+  if(q.kind==='suma'){
+    if(q.op==='+')return `Pasa las dos medidas a dieciseisavos: ${fracText(q.a)} = ${q.a}/16 y ${fracText(q.b)} = ${q.b}/16. Suma: ${q.a+q.b}/16. Simplifica y separa los enteros: <b>${fracText(q.v)}</b>.`;
+    return `Pasa las dos medidas a dieciseisavos: ${fracText(q.T)} = ${q.T}/16 y ${fracText(q.c)} = ${q.c}/16. Resta: ${q.T-q.c}/16. Simplifica y separa los enteros: <b>${fracText(q.v)}</b>.`;
+  }
+  if(q.dir==='a')return `${fracText(q.n)} = ${fmt(q.n/16,4)}″. Multiplica por 25,4: <b>${fmt(q.n*U16,2)} mm</b>.`;
+  return `${q.mm} ÷ 25,4 = ${fmt(q.mm/MM,3)}″. Multiplica por 16: ${fmt(q.mm/U16,1)} ≈ ${q.n} dieciseisavos. Simplificado: <b>${fracText(q.n)}</b>. Necesitas una broca de ${fracText(q.n)}.`;
+}
+function pzTip(q){
+  if(q.kind==='pzmm'||q.kind==='pzin')return 'Mira otra vez la marca y cuenta las rayas desde el último número.';
+  if(q.kind==='corte')return 'Recuerda que cada corte gasta material: hay tantos cortes como trozos.';
+  if(q.kind==='int')return 'La lectura de la cinta no incluye la carcasa. ¿Qué te falta sumar?';
+  if(q.kind==='suma')return 'Pasa las medidas a dieciseisavos para sumar o restar más fácil.';
+  return q.dir==='a'?'Recuerda: pulgadas × 25,4 = mm.':'Recuerda: mm ÷ 25,4 = pulgadas. Luego multiplica por 16 para saber cuántos dieciseisavos son.';
+}
+function pzAnsHTML(t){
+  if(t==='cmmm')return answerHTML('mm','pz');
+  if(t==='frac')return answerHTML('in','pz');
+  const id=t==='int'?'pzI':'pzD';
+  return `<div class="ans"><input id="${id}" type="${t==='int'?'number':'text'}" inputmode="${t==='int'?'numeric':'decimal'}" class="wide" placeholder="0" aria-label="Milímetros"><span class="un">mm</span></div>`;
+}
+/* figuras */
+function bracket(x1,x2,y){return `<path d="M${x1} ${y-5}V${y}H${x2}V${y-5}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;}
+function barsSVG(W,f){
+  const pad=14,iw=W-2*pad,top=34,bh=34,sc=iw/f.total,H=top+bh+(f.kerf?70:56);
+  let t=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">`;
+  if(f.totalLabel){
+    t+=`<path d="M${pad} 22V14H${pad+iw}V22" fill="none" stroke="var(--ink)" stroke-width="2"/><text class="bt" x="${W/2}" y="10" text-anchor="middle">${f.totalLabel}</text>`;
+  }
+  let pos=0;
+  f.parts.forEach(p=>{
+    const x=pad+pos*sc,w=p.len*sc;
+    t+=`<rect x="${x}" y="${top}" width="${w}" height="${bh}" fill="#FFC61A" stroke="#111" stroke-width="2"/>`;
+    if(w>(p.label.length*7+8))t+=`<text class="fl" x="${x+w/2}" y="${top+bh/2+5}" text-anchor="middle" style="font-size:14px">${p.label}</text>`;
+    pos+=p.len;
+    if(p.kerf){const kx=pad+pos*sc;t+=`<rect x="${kx-1.5}" y="${top-6}" width="3" height="${bh+12}" fill="#E5484D"/>`;pos+=p.kerf;}
+  });
+  const xe=pad+pos*sc;
+  if(f.rem){
+    const w=pad+iw-xe;
+    t+=`<rect x="${xe}" y="${top}" width="${w}" height="${bh}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>`;
+    const cx=clamp(xe+w/2,pad+34,W-pad-34);
+    t+=`<text class="bt" x="${cx}" y="${top+bh+20}" text-anchor="middle">sobra ?</text>`;
+  }
+  if(f.sum){
+    t+=bracket(pad,xe,top+bh+18).replace(/V(\S+)H/,'V$1H');
+    t+=`<text class="bt" x="${(pad+xe)/2}" y="${top+bh+38}" text-anchor="middle">total ?</text>`;
+  }
+  if(f.kerf)t+=`<rect x="${pad}" y="${H-16}" width="3" height="12" fill="#E5484D"/><text class="bt" x="${pad+10}" y="${H-6}" style="font-size:13px">= un corte de sierra</text>`;
+  return t+'</svg>';
+}
+function intSVG(W,f){
+  const pad=16,iw=W-2*pad-8,H=156,cw=Math.round(iw*.2),x0=pad;
+  let t=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">`;
+  t+=`<rect x="${x0-8}" y="8" width="8" height="66" fill="var(--ink)"/><rect x="${x0+iw}" y="8" width="8" height="66" fill="var(--ink)"/>`;
+  t+=`<rect x="${x0+cw}" y="35" width="${iw-cw}" height="14" fill="#FFD84A" stroke="#111" stroke-width="1.5"/>`;
+  for(let x=x0+cw+8;x<x0+iw-4;x+=10)t+=`<path d="M${x} 35v6" stroke="#111" stroke-width="1.2"/>`;
+  t+=`<rect x="${x0+iw-5}" y="30" width="5" height="24" fill="#9AA5B1" stroke="#111" stroke-width="1.2"/>`;
+  t+=`<rect x="${x0}" y="24" width="${cw}" height="36" rx="7" fill="#FFC61A" stroke="#111" stroke-width="2"/>`;
+  t+=bracket(x0,x0+cw,96)+`<text class="bt" x="${x0+cw/2}" y="114" text-anchor="middle">${f.cw} mm</text>`;
+  t+=bracket(x0+cw,x0+iw,96)+`<text class="bt" x="${x0+cw+(iw-cw)/2}" y="114" text-anchor="middle">lectura: ${f.r} mm</text>`;
+  t+=bracket(x0,x0+iw,130)+`<text class="bt" x="${x0+iw/2}" y="149" text-anchor="middle">ancho real: ?</text>`;
+  return t+'</svg>';
+}
+function pzFig(W){
+  const q=Pz.q;if(!q)return '';
+  if(q.kind==='corte'){
+    const parts=[];for(let i=0;i<q.n;i++)parts.push({len:q.p,label:String(q.p),kerf:q.k});
+    return barsSVG(W,{total:q.L,totalLabel:`${q.L} mm`,parts,rem:true,kerf:true});
+  }
+  if(q.kind==='int')return intSVG(W,q);
+  if(q.kind==='suma'){
+    if(q.op==='+')return barsSVG(W,{total:q.a+q.b,parts:[{len:q.a,label:fracText(q.a)},{len:q.b,label:fracText(q.b)}],sum:true});
+    return barsSVG(W,{total:q.T,totalLabel:fracText(q.T),parts:[{len:q.c,label:fracText(q.c)}],rem:true});
+  }
+  return '';
+}
+const isTape=q=>q&&(q.kind==='pzmm'||q.kind==='pzin');
+const pzTapeDraw=mountTape($('#pzTape'),{
+  get:()=>{const q=Pz.q;if(!isTape(q))return null;
+    return{system:q.sys,from:q.from,span:q.span,marker:posMm(q),pieza:true,label:q.label,mcolor:Pz.done&&Pz.ok?'#127A4F':'#E5484D'};}
+});
+const pzFigDraw=mountFig($('#pzFig'),W=>pzFig(W));
+function pzPicker(){
+  return `<div class="lvls" role="group" aria-label="Tipo de problema">${PZK.map(([id,n])=>{const k='taller:'+id;
+    return `<button type="button" class="lvl" data-kind="${id}" aria-pressed="${Pz.kind===id}"><span class="ln">${n}</span>${tks(k)}${cnt(k)>=5?'<span class="done">Tipo superado</span>':''}</button>`;}).join('')}</div>`;
+}
+function pzRender(){
+  const q=Pz.q,tape=isTape(q);
+  $('#pzBox').dataset.unit=(q.sys==='in')?'in':'mm';
+  $('#pzPick').innerHTML=pzPicker();
+  $('#pzTask').innerHTML=q.html;
+  $('#pzAns').innerHTML=pzAnsHTML(q.ans);
+  $('#pzTape').hidden=!tape;$('#pzFig').hidden=tape;
+  setFb('#pzFb','','');$('#pzCheck').disabled=false;$('#pzNext').hidden=true;
+  pzTapeDraw();pzFigDraw();
+}
+function pzNew(){Pz.q=pzGen(Pz.kind);Pz.tries=0;Pz.done=false;Pz.ok=false;pzRender();}
+$('#pzPick').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.dataset.kind){Pz.kind=b.dataset.kind;pzNew();}});
+$('#pzNext').addEventListener('click',pzNew);
+function pzEnd(){$('#pzCheck').disabled=true;$('#pzNext').hidden=false;pzTapeDraw();}
+$('#pzCheck').addEventListener('click',()=>{
+  if(Pz.done)return;
+  const q=Pz.q;let ok=false,dir=0;
+  if(q.ans==='cmmm'||q.ans==='frac'){
+    const a=readAns(q.ans==='cmmm'?'mm':'in','pz');
+    if(a.empty)return setFb('#pzFb','warn','Escribe tu respuesta antes de comprobar.');
+    if(a.err)return setFb('#pzFb','warn',a.err);
+    if(a.total===q.v){
+      if(q.ans==='frac'&&!a.simplified)return setFb('#pzFb','warn','El valor está bien, pero falta simplificar la fracción. Redúcela y vuelve a comprobar.');
+      ok=true;
+    }else dir=a.total>q.v?1:-1;
+  }else{
+    const v=parseNum($(q.ans==='int'?'#pzI':'#pzD').value);
+    if(!isFinite(v))return setFb('#pzFb','warn','Escribe un número. Puedes usar coma o punto para los decimales.');
+    ok=Math.abs(v-q.v)<=(q.ans==='int'?0.001:0.06);dir=v>q.v?1:-1;
+  }
+  if(ok){
+    const pts=Pz.tries===0?2:1;Pz.done=true;Pz.ok=true;
+    setFb('#pzFb','ok',finish('pz',true,'taller:'+q.kind,pts,'#pzFb',`<b>¡Correcto!</b> +${pts} punto${pts>1?'s':''}. ${pzExplain(q)}`));
+    pzEnd();$('#pzPick').innerHTML=pzPicker();return;
+  }
+  Pz.tries++;
+  if(Pz.tries===1)setFb('#pzFb','bad',`Todavía no. Tu respuesta es ${dir>0?'mayor':'menor'} que la correcta. ${pzTip(q)}`);
+  else{Pz.done=true;Pz.ok=false;setFb('#pzFb','bad',`Esta vez no salió. ${pzExplain(q)}`);pzEnd();}
+});
+
+/* ---------- Enter para comprobar ---------- */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.matches('input')){
+    const s=e.target.closest('[data-check]');if(s){e.preventDefault();$(s.dataset.check).click();}
+  }
+});
+
+/* ---------- Pestañas ---------- */
+const tabs=$$('.tab'),panels=$$('.panel');
+function show(id){
+  tabs.forEach(t=>{const on=t.dataset.p===id;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;});
+  panels.forEach(p=>{p.hidden=p.id!==id;});
+  requestAnimationFrame(()=>draws.forEach(d=>d()));
+}
+tabs.forEach((t,i)=>{
+  t.addEventListener('click',()=>show(t.dataset.p));
+  t.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+      const n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];n.focus();show(n.dataset.p);
+    }
+  });
+});
+
+/* ---------- Reiniciar ---------- */
+let rt=null;
+$('#reset').addEventListener('click',e=>{
+  const b=e.target;
+  if(!rt){b.textContent='¿Seguro? Toca otra vez para borrar';rt=setTimeout(()=>{b.textContent='Reiniciar mi avance';rt=null;},4000);return;}
+  clearTimeout(rt);rt=null;b.textContent='Reiniciar mi avance';
+  prog={pts:0,done:{}};save();renderPts();leeRender();maRender();cvPicker();pzRender();
+});
+
+/* ---------- Inicio ---------- */
+renderPts();exRead();cRender();leeNew();maNew();cvNew();pzNew();
+show('p-conoce');
+})();
+</script>
+</body>
+</html>
